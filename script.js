@@ -1,31 +1,19 @@
-let daten;
+// Annahme: Daten sind bereits in der Variable `daten` enthalten, also entfällt der Ladeprozess
+// daten = JSON-Daten des Reiseplans (anstelle eines separaten JSON-Fetch-Vorgangs).
+// Wenn daten als externes JSON benötigt wird, aktivieren Sie ladeDaten().
+
 let aktuellerIndex = 0;
 let karte;
 let markerLayer;
 let aktuellerMarker;
 
-async function ladeDaten() {
-  try {
-    const antwort = await fetch('australien_reiseplan.json');
-    daten = await antwort.json();
-    if (daten && daten.length > 0) {
-      initialisiereKarte();
-      zeigeOrt(aktuellerIndex);
-    } else {
-      console.error('Die JSON-Datei enthält keine Daten.');
-    }
-  } catch (error) {
-    console.error('Fehler beim Laden der Daten:', error);
-  }
-}
-
 function initialisiereKarte() {
-  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Zentrum auf Australien
+  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Zentriert auf Australien
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
   }).addTo(karte);
 
-  // Marker-Layer erstellen
+  // Marker-Layer für die Karte
   markerLayer = L.layerGroup().addTo(karte);
   zeichneRoute();
 }
@@ -75,4 +63,8 @@ function vorherigerOrt() {
   }
 }
 
-window.onload = ladeDaten;
+// Karte und erste Anzeige initialisieren
+window.onload = function() {
+  initialisiereKarte();
+  zeigeOrt(aktuellerIndex);
+};
