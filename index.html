@@ -8,22 +8,28 @@
 </head>
 <body>
   <header>
+    <img src="airbnb-logo.png" alt="Airbnb Logo" class="logo">
     <h1>Australien Reiseplan</h1>
   </header>
   <main id="inhalt">
-    <h2 id="ort"></h2>
-    <img id="bild" src="" alt="Bild des Ortes">
-    <div id="info">
-      <p><strong>Tag:</strong> <span id="tag"></span> | <span id="datum"></span></p>
-      <p><strong>Unterkunft:</strong> <span id="unterkunft"></span></p>
-      <p><strong>Mietwagen:</strong> <span id="mietwagen"></span></p>
-      <p><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
-      <p><strong>Hinweise:</strong> <span id="hinweise"></span></p>
-    </div>
-    <div id="karte"></div>
-    <div class="navigation">
-      <button onclick="vorherigerOrt()">← Zurück</button>
-      <button onclick="naechsterOrt()">Weiter →</button>
+    <div class="card" id="karte-container">
+      <img id="bild" src="" alt="Bild des Ortes">
+      <div class="card-content">
+        <div class="card-header">
+          <h2 id="ort"></h2>
+          <span class="favorite">❤️</span>
+        </div>
+        <p class="location"><span id="tag"></span> | <span id="datum"></span></p>
+        <p class="details"><strong>Unterkunft:</strong> <span id="unterkunft"></span></p>
+        <p class="details"><strong>Mietwagen:</strong> <span id="mietwagen"></span></p>
+        <p class="details"><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
+        <p class="details"><strong>Hinweise:</strong> <span id="hinweise"></span></p>
+      </div>
+      <div id="karte" class="map"></div>
+      <div class="navigation">
+        <button onclick="vorherigerOrt()">← Zurück</button>
+        <button onclick="naechsterOrt()">Weiter →</button>
+      </div>
     </div>
   </main>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
