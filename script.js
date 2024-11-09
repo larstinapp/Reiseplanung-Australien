@@ -13,7 +13,6 @@ function zeigeOrt(index) {
   document.getElementById('tag').textContent = `Tag ${ortDaten.Tag}`;
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
   document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
-  document.getElementById('mietwagen').textContent = ortDaten.Mietwagen ? `Mietwagen: ${ortDaten.Mietwagen}` : 'Kein Mietwagen';
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
   document.getElementById('hinweise').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
 
