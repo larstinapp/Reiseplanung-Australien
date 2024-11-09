@@ -1,14 +1,34 @@
 let daten;
 let aktuellerIndex = 0;
+let karte;
+let markerLayer;
 
 async function ladeDaten() {
   const antwort = await fetch('australien_reiseplan.json');
   daten = await antwort.json();
+  initialisiereKarte();
   zeigeOrt(aktuellerIndex);
+}
+
+function initialisiereKarte() {
+  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Start auf einer Übersicht über Australien
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+  }).addTo(karte);
+
+  markerLayer = L.layerGroup().addTo(karte); // Schicht für die Marker
+  zeichneRoute(); // Zeichnet die gesamte Route
+}
+
+function zeichneRoute() {
+  const routenPunkte = daten.map(stopp => [stopp.Breitengrad, stopp.Längengrad]);
+  L.polyline(routenPunkte, { color: 'blue', weight: 4, opacity: 0.6 }).addTo(karte); // Linie für die Route
 }
 
 function zeigeOrt(index) {
   const ortDaten = daten[index];
+  
+  // Setzt die Ortsinformationen im HTML
   document.getElementById('ort').textContent = ortDaten.Ort;
   document.getElementById('tag').textContent = `Tag ${ortDaten.Tag}`;
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
@@ -20,16 +40,16 @@ function zeigeOrt(index) {
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  if (window.karte) {
-    window.karte.remove();
-  }
-  window.karte = L.map('karte').setView([ortDaten.Breitengrad, ortDaten.Längengrad], 13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-  }).addTo(window.karte);
-  L.marker([ortDaten.Breitengrad, ortDaten.Längengrad]).addTo(window.karte)
-    .bindPopup(ortDaten.Ort)
-    .openPopup();
+  // Entfernt die alten Marker und fügt neue hinzu
+  markerLayer.clearLayers();
+  daten.forEach((stopp, i) => {
+    const marker = L.marker([stopp.Breitengrad, stopp.Längengrad], { opacity: i === index ? 1 : 0.5 }); // Hellerer Marker für den aktuellen Stopp
+    marker.bindPopup(`${stopp.Ort}`).openPopup();
+    markerLayer.addLayer(marker);
+  });
+
+  // Zentriert die Karte auf den aktuellen Stopp
+  karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
 }
 
 function naechsterOrt() {
