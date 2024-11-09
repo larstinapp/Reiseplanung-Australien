@@ -18,7 +18,6 @@ function initialisiereKarte() {
 
   markerLayer = L.layerGroup().addTo(karte); // Schicht für die Marker
   zeichneRoute(); // Zeichnet die gesamte Route
-  karte.invalidateSize(); // Sicherstellen, dass die Kartengröße korrekt berechnet wird
 }
 
 function zeichneRoute() {
@@ -61,11 +60,4 @@ function naechsterOrt() {
   }
 }
 
-function vorherigerOrt() {
-  if (aktuellerIndex > 0) {
-    aktuellerIndex--;
-    zeigeOrt(aktuellerIndex);
-  }
-}
-
-window.onload = ladeDaten;
+function vorheriger
