@@ -19,23 +19,18 @@ async function ladeDaten() {
 }
 
 function initialisiereKarte() {
-  // Initialisieren Sie die Karte nur, wenn das Element #karte existiert
   const mapContainer = document.getElementById('karte');
   if (!mapContainer) {
     console.error('Karten-Container nicht gefunden.');
     return;
   }
 
-  karte = L.map('karte', { zoomControl: true }).setView([-25.2744, 133.7751], 5);
+  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Zentrum auf Australien
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
   }).addTo(karte);
 
-  // Sicherstellen, dass die Kartengröße korrekt berechnet wird
-  setTimeout(() => {
-    karte.invalidateSize();
-  }, 100);
-
+  // Marker-Layer erstellen
   markerLayer = L.layerGroup().addTo(karte);
   zeichneRoute();
 }
@@ -59,30 +54,5 @@ function zeigeOrt(index) {
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  // Entfernt die alten Marker und fügt neue hinzu
   markerLayer.clearLayers();
-  daten.forEach((stopp, i) => {
-    const marker = L.marker([stopp.Breitengrad, stopp.Längengrad], { opacity: i === index ? 1 : 0.5 });
-    marker.bindPopup(`${stopp.Ort}`).openPopup();
-    markerLayer.addLayer(marker);
-  });
-
-  karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
-  karte.invalidateSize(); // Sicherstellen, dass die Karte die Größe anpasst
-}
-
-function naechsterOrt() {
-  if (aktuellerIndex < daten.length - 1) {
-    aktuellerIndex++;
-    zeigeOrt(aktuellerIndex);
-  }
-}
-
-function vorherigerOrt() {
-  if (aktuellerIndex > 0) {
-    aktuellerIndex--;
-    zeigeOrt(aktuellerIndex);
-  }
-}
-
-window.onload = ladeDaten;
+  daten.for
