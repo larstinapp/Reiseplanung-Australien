@@ -7,8 +7,11 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="inhalt">
-    <h1 id="ort"></h1>
+  <header>
+    <h1>Australien Reiseplan</h1>
+  </header>
+  <main id="inhalt">
+    <h2 id="ort"></h2>
     <img id="bild" src="" alt="Bild des Ortes">
     <div id="info">
       <p><strong>Tag:</strong> <span id="tag"></span> | <span id="datum"></span></p>
@@ -19,10 +22,10 @@
     </div>
     <div id="karte"></div>
     <div class="navigation">
-      <button onclick="vorherigerOrt()">Zurück</button>
-      <button onclick="naechsterOrt()">Weiter</button>
+      <button onclick="vorherigerOrt()">← Zurück</button>
+      <button onclick="naechsterOrt()">Weiter →</button>
     </div>
-  </div>
+  </main>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
