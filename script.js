@@ -4,10 +4,18 @@ let karte;
 let markerLayer;
 
 async function ladeDaten() {
-  const antwort = await fetch('australien_reiseplan.json');
-  daten = await antwort.json();
-  initialisiereKarte();
-  zeigeOrt(aktuellerIndex);
+  try {
+    const antwort = await fetch('australien_reiseplan.json');
+    daten = await antwort.json();
+    if (daten && daten.length > 0) {
+      initialisiereKarte();
+      zeigeOrt(aktuellerIndex);
+    } else {
+      console.error('Die JSON-Datei enthält keine Daten.');
+    }
+  } catch (error) {
+    console.error('Fehler beim Laden der Daten:', error);
+  }
 }
 
 function initialisiereKarte() {
@@ -16,19 +24,18 @@ function initialisiereKarte() {
     maxZoom: 18,
   }).addTo(karte);
 
-  markerLayer = L.layerGroup().addTo(karte); // Schicht für die Marker
-  zeichneRoute(); // Zeichnet die gesamte Route
+  markerLayer = L.layerGroup().addTo(karte);
+  zeichneRoute();
 }
 
 function zeichneRoute() {
   const routenPunkte = daten.map(stopp => [stopp.Breitengrad, stopp.Längengrad]);
-  L.polyline(routenPunkte, { color: 'blue', weight: 4, opacity: 0.6 }).addTo(karte); // Linie für die Route
+  L.polyline(routenPunkte, { color: 'blue', weight: 4, opacity: 0.6 }).addTo(karte);
 }
 
 function zeigeOrt(index) {
   const ortDaten = daten[index];
   
-  // Setzt die Ortsinformationen im HTML
   document.getElementById('ort').textContent = ortDaten.Ort;
   document.getElementById('tag').textContent = `Tag ${ortDaten.Tag}`;
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
@@ -40,7 +47,6 @@ function zeigeOrt(index) {
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  // Entfernt die alten Marker und fügt neue hinzu
   markerLayer.clearLayers();
   daten.forEach((stopp, i) => {
     const marker = L.marker([stopp.Breitengrad, stopp.Längengrad], { opacity: i === index ? 1 : 0.5 });
@@ -48,9 +54,8 @@ function zeigeOrt(index) {
     markerLayer.addLayer(marker);
   });
 
-  // Zentriert die Karte auf den aktuellen Stopp
   karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
-  karte.invalidateSize(); // Erzwingt ein Neurendering, falls die Karte beim ersten Laden nicht korrekt dargestellt wird
+  karte.invalidateSize();
 }
 
 function naechsterOrt() {
