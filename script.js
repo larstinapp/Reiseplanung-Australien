@@ -10,7 +10,7 @@ async function ladeDaten() {
 function zeigeOrt(index) {
   const ortDaten = daten[index];
   document.getElementById('ort').textContent = ortDaten.Ort;
-  document.getElementById('tag').textContent = `Tag: ${ortDaten.Tag}`;
+  document.getElementById('tag').textContent = `Tag ${ortDaten.Tag}`;
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
   document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
   document.getElementById('preis').textContent = `${ortDaten.Preis} EUR`;
