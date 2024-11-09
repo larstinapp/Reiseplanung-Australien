@@ -2,6 +2,7 @@ let daten;
 let aktuellerIndex = 0;
 let karte;
 let markerLayer;
+let aktuellerMarker;
 
 async function ladeDaten() {
   try {
@@ -19,12 +20,6 @@ async function ladeDaten() {
 }
 
 function initialisiereKarte() {
-  const mapContainer = document.getElementById('karte');
-  if (!mapContainer) {
-    console.error('Karten-Container nicht gefunden.');
-    return;
-  }
-
   karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Zentrum auf Australien
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
@@ -54,5 +49,30 @@ function zeigeOrt(index) {
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  markerLayer.clearLayers();
-  daten.for
+  // Aktuellen Marker setzen
+  if (aktuellerMarker) {
+    markerLayer.removeLayer(aktuellerMarker);
+  }
+  aktuellerMarker = L.marker([ortDaten.Breitengrad, ortDaten.Längengrad], { opacity: 1 })
+    .addTo(markerLayer)
+    .bindPopup(`${ortDaten.Ort}`)
+    .openPopup();
+
+  karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
+}
+
+function naechsterOrt() {
+  if (aktuellerIndex < daten.length - 1) {
+    aktuellerIndex++;
+    zeigeOrt(aktuellerIndex);
+  }
+}
+
+function vorherigerOrt() {
+  if (aktuellerIndex > 0) {
+    aktuellerIndex--;
+    zeigeOrt(aktuellerIndex);
+  }
+}
+
+window.onload = ladeDaten;
