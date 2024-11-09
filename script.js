@@ -60,4 +60,11 @@ function naechsterOrt() {
   }
 }
 
-function vorheriger
+function vorherigerOrt() {
+  if (aktuellerIndex > 0) {
+    aktuellerIndex--;
+    zeigeOrt(aktuellerIndex);
+  }
+}
+
+window.onload = ladeDaten;
