@@ -10,16 +10,20 @@ async function ladeDaten() {
 function zeigeOrt(index) {
   const ortDaten = daten[index];
   document.getElementById('ort').textContent = ortDaten.Ort;
+  document.getElementById('tag').textContent = `Tag: ${ortDaten.Tag}`;
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
   document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
-  document.getElementById('preis').textContent = ortDaten.Preis;
-  document.getElementById('mietwagen').textContent = ortDaten.Mietwagen;
-  document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswuerdigkeiten;
-  document.getElementById('hinweise').textContent = ortDaten.Hinweise;
-  document.getElementById('bild').src = ortDaten.BildURL;
-  document.getElementById('bild').alt = `Bild von ${ortDaten.Ort}`;
+  document.getElementById('preis').textContent = `${ortDaten.Preis} EUR`;
+  document.getElementById('mietwagen').textContent = ortDaten.Mietwagen ? `Mietwagen: ${ortDaten.Mietwagen}` : 'Kein Mietwagen';
+  document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
+  document.getElementById('hinweise').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
+  
+  // Set image and handle alt text
+  const bildElement = document.getElementById('bild');
+  bildElement.src = ortDaten.BildURL;
+  bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  // Karte initialisieren
+  // Initialize or update map
   if (window.karte) {
     window.karte.remove();
   }
