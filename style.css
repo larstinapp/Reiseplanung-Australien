@@ -99,7 +99,7 @@ header h1 {
 /* Karte */
 .map {
   width: 100%;
-  height: 400px; /* Stellen Sie sicher, dass eine feste Höhe definiert ist */
+  height: 400px;
   margin-top: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
