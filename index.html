@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Australia Travel Plan</title>
+  <title>Australien Reiseplan</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="content">
-    <h1 id="location"></h1>
-    <p><strong>Date:</strong> <span id="date"></span></p>
-    <p><strong>Accommodation:</strong> <span id="accommodation"></span></p>
-    <p><strong>Price:</strong> <span id="price"></span> AUD</p>
-    <p><strong>Car Rental:</strong> <span id="carRental"></span></p>
-    <p><strong>Sights:</strong> <span id="sights"></span></p>
-    <p><strong>Important Notes:</strong> <span id="notes"></span></p>
-    <div id="map"></div>
+  <div id="inhalt">
+    <h1 id="ort"></h1>
+    <img id="bild" src="" alt="Bild des Ortes">
+    <p><strong>Datum:</strong> <span id="datum"></span></p>
+    <p><strong>Unterkunft:</strong> <span id="unterkunft"></span></p>
+    <p><strong>Preis:</strong> <span id="preis"></span> AUD</p>
+    <p><strong>Mietwagen:</strong> <span id="mietwagen"></span></p>
+    <p><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
+    <p><strong>Wichtige Hinweise:</strong> <span id="hinweise"></span></p>
+    <div id="karte"></div>
     <div class="navigation">
-      <button onclick="prevLocation()">Previous</button>
-      <button onclick="nextLocation()">Next</button>
+      <button onclick="vorherigerOrt()">Zurück</button>
+      <button onclick="naechsterOrt()">Weiter</button>
     </div>
   </div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <script src="daten.js"></script>
+  <script src="skript.js"></script>
 </body>
 </html>
