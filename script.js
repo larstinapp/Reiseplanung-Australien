@@ -1,45 +1,49 @@
-// JavaScript to handle data and navigation
-let data;
-let currentIndex = 0;
+let daten;
+let aktuellerIndex = 0;
 
-async function loadData() {
-  const response = await fetch('australia_travel_plan.json');
-  data = await response.json();
-  displayLocation(currentIndex);
+async function ladeDaten() {
+  const antwort = await fetch('australien_reiseplan.json');
+  daten = await antwort.json();
+  zeigeOrt(aktuellerIndex);
 }
 
-function displayLocation(index) {
-  const locationData = data[index];
-  document.getElementById('location').textContent = locationData.Location;
-  document.getElementById('date').textContent = new Date(locationData.Date).toLocaleDateString();
-  document.getElementById('accommodation').textContent = locationData.Accommodation;
-  document.getElementById('price').textContent = locationData.Price;
-  document.getElementById('carRental').textContent = locationData.CarRental;
-  document.getElementById('sights').textContent = locationData.Sights;
-  document.getElementById('notes').textContent = locationData.Notes;
+function zeigeOrt(index) {
+  const ortDaten = daten[index];
+  document.getElementById('ort').textContent = ortDaten.Ort;
+  document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
+  document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
+  document.getElementById('preis').textContent = ortDaten.Preis;
+  document.getElementById('mietwagen').textContent = ortDaten.Mietwagen;
+  document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswuerdigkeiten;
+  document.getElementById('hinweise').textContent = ortDaten.Hinweise;
+  document.getElementById('bild').src = ortDaten.BildURL;
+  document.getElementById('bild').alt = `Bild von ${ortDaten.Ort}`;
 
-  // Initialize map
-  if (window.map) {
-    window.map.remove();
+  // Karte initialisieren
+  if (window.karte) {
+    window.karte.remove();
   }
-  window.map = L.map('map').setView([-25.2744, 133.7751], 5); // General location of Australia
+  window.karte = L.map('karte').setView([ortDaten.Breitengrad, ortDaten.Längengrad], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
-  }).addTo(window.map);
+  }).addTo(window.karte);
+  L.marker([ortDaten.Breitengrad, ortDaten.Längengrad]).addTo(window.karte)
+    .bindPopup(ortDaten.Ort)
+    .openPopup();
 }
 
-function nextLocation() {
-  if (currentIndex < data.length - 1) {
-    currentIndex++;
-    displayLocation(currentIndex);
+function naechsterOrt() {
+  if (aktuellerIndex < daten.length - 1) {
+    aktuellerIndex++;
+    zeigeOrt(aktuellerIndex);
   }
 }
 
-function prevLocation() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    displayLocation(currentIndex);
+function vorherigerOrt() {
+  if (aktuellerIndex > 0) {
+    aktuellerIndex--;
+    zeigeOrt(aktuellerIndex);
   }
 }
 
-window.onload = loadData;
+window.onload = ladeDaten;
