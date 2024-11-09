@@ -17,12 +17,10 @@ function zeigeOrt(index) {
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
   document.getElementById('hinweise').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
 
-  // Set image and handle alt text
   const bildElement = document.getElementById('bild');
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  // Initialize or update map
   if (window.karte) {
     window.karte.remove();
   }
