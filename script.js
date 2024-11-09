@@ -11,13 +11,14 @@ async function ladeDaten() {
 }
 
 function initialisiereKarte() {
-  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Start auf einer Übersicht über Australien
+  karte = L.map('karte', { zoomControl: true }).setView([-25.2744, 133.7751], 5);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
   }).addTo(karte);
 
   markerLayer = L.layerGroup().addTo(karte); // Schicht für die Marker
   zeichneRoute(); // Zeichnet die gesamte Route
+  karte.invalidateSize(); // Sicherstellen, dass die Kartengröße korrekt berechnet wird
 }
 
 function zeichneRoute() {
@@ -43,13 +44,14 @@ function zeigeOrt(index) {
   // Entfernt die alten Marker und fügt neue hinzu
   markerLayer.clearLayers();
   daten.forEach((stopp, i) => {
-    const marker = L.marker([stopp.Breitengrad, stopp.Längengrad], { opacity: i === index ? 1 : 0.5 }); // Hellerer Marker für den aktuellen Stopp
+    const marker = L.marker([stopp.Breitengrad, stopp.Längengrad], { opacity: i === index ? 1 : 0.5 });
     marker.bindPopup(`${stopp.Ort}`).openPopup();
     markerLayer.addLayer(marker);
   });
 
   // Zentriert die Karte auf den aktuellen Stopp
   karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
+  karte.invalidateSize(); // Erzwingt ein Neurendering, falls die Karte beim ersten Laden nicht korrekt dargestellt wird
 }
 
 function naechsterOrt() {
