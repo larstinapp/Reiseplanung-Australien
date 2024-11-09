@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Australia Travel Plan</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="content">
+    <h1 id="location"></h1>
+    <p><strong>Date:</strong> <span id="date"></span></p>
+    <p><strong>Accommodation:</strong> <span id="accommodation"></span></p>
+    <p><strong>Price:</strong> <span id="price"></span> AUD</p>
+    <p><strong>Car Rental:</strong> <span id="carRental"></span></p>
+    <p><strong>Sights:</strong> <span id="sights"></span></p>
+    <p><strong>Important Notes:</strong> <span id="notes"></span></p>
+    <div id="map"></div>
+    <div class="navigation">
+      <button onclick="prevLocation()">Previous</button>
+      <button onclick="nextLocation()">Next</button>
+    </div>
+  </div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
