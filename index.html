@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tinapp's Australien Reiseplan</title>
+  <title>Australien Reiseplan</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
   <header>
-    <h1>Family Tinapp Australien Reiseplan</h1>
+    <h1>Australien Reiseplan</h1>
   </header>
   <main id="inhalt">
     <div class="card">
@@ -20,7 +20,9 @@
         <p><strong>Datum:</strong> <span id="datum"></span></p>
         <p><strong>Unterkunft:</strong> <span id="unterkunft"></span></p>
         <p><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
-        <p><strong>Hinweise:</strong> <span id="hinweise"></span></p>
+        <label for="hinweise">Hinweise:</label>
+        <textarea id="hinweise" rows="3"></textarea>
+        <button onclick="speichereHinweise()">Speichern</button>
       </div>
       <div id="karte" class="map"></div>
       <div class="navigation">
