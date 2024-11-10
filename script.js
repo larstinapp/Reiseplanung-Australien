@@ -71,11 +71,14 @@ function zeigeOrt(index) {
     .openPopup();
 
   karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
+
+  // Markiere den gewählten Tag im Kalender
+  markiereAktuellenKalenderTag();
 }
 
 function bearbeitenHinweise() {
   const aktuelleHinweise = daten[aktuellerIndex].Hinweise || 'Keine zusätzlichen Hinweise';
-  document.getElementById('hinweise').value = aktuelleHinweise; // Vorhandene Hinweise im Textfeld anzeigen
+  document.getElementById('hinweise').value = aktuelleHinweise;
   document.getElementById('hinweiseModal').style.display = 'block';
 }
 
@@ -114,14 +117,24 @@ function vorherigerOrt() {
 
 function erzeugeKalender() {
   const kalenderContainer = document.getElementById('kalender');
-  kalenderContainer.innerHTML = ''; // Leeren des Kalendercontainers
+  kalenderContainer.innerHTML = '';
 
   daten.forEach((stopp, index) => {
     const kalenderTag = document.createElement('button');
-    kalenderTag.textContent = `Tag ${stopp.Tag}`;
+    kalenderTag.textContent = `Tag ${stopp.Tag} - ${new Date(stopp.Datum).toLocaleDateString('de-DE')}`;
     kalenderTag.className = 'kalender-tag';
     kalenderTag.onclick = () => zeigeOrt(index);
     kalenderContainer.appendChild(kalenderTag);
+  });
+
+  markiereAktuellenKalenderTag();
+}
+
+function markiereAktuellenKalenderTag() {
+  const kalenderButtons = document.querySelectorAll('.kalender-tag');
+  kalenderButtons.forEach((button, index) => {
+    button.style.backgroundColor = index === aktuellerIndex ? 'white' : '#00796b';
+    button.style.color = index === aktuellerIndex ? '#00796b' : 'white';
   });
 }
 
