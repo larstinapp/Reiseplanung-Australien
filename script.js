@@ -15,6 +15,7 @@ async function ladeDaten() {
     if (daten && daten.length > 0) {
       initialisiereKarte();
       zeigeOrt(aktuellerIndex);
+      erzeugeKalender();
     } else {
       console.error('Die JSON-Datei enthält keine Daten.');
     }
@@ -39,6 +40,7 @@ function zeichneRoute() {
 }
 
 function zeigeOrt(index) {
+  aktuellerIndex = index;
   const ortDaten = daten[index];
   
   document.getElementById('ort').textContent = ortDaten.Ort;
@@ -48,7 +50,6 @@ function zeigeOrt(index) {
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
   document.getElementById('hinweiseText').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
 
-  // Link zur Unterkunft anzeigen oder ausblenden
   const unterkunftLink = document.getElementById('unterkunftLink');
   if (ortDaten.URL) {
     unterkunftLink.href = ortDaten.URL;
@@ -72,14 +73,12 @@ function zeigeOrt(index) {
   karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
 }
 
-// Hinweise bearbeiten
 function bearbeitenHinweise() {
   const aktuelleHinweise = daten[aktuellerIndex].Hinweise || 'Keine zusätzlichen Hinweise';
-  document.getElementById('hinweise').value = aktuelleHinweise;
+  document.getElementById('hinweise').value = aktuelleHinweise; // Vorhandene Hinweise im Textfeld anzeigen
   document.getElementById('hinweiseModal').style.display = 'block';
 }
 
-// Hinweise speichern
 function speichereHinweise() {
   const hinweise = document.getElementById('hinweise').value;
   daten[aktuellerIndex].Hinweise = hinweise;
@@ -89,12 +88,10 @@ function speichereHinweise() {
   schliesseModal();
 }
 
-// Modal schließen
 function schliesseModal() {
   document.getElementById('hinweiseModal').style.display = 'none';
 }
 
-// Navigation
 function naechsterOrt() {
   if (aktuellerIndex < daten.length - 1) {
     aktuellerIndex++;
@@ -115,5 +112,17 @@ function vorherigerOrt() {
   }
 }
 
-// Initialisierung
+function erzeugeKalender() {
+  const kalenderContainer = document.getElementById('kalender');
+  kalenderContainer.innerHTML = ''; // Leeren des Kalendercontainers
+
+  daten.forEach((stopp, index) => {
+    const kalenderTag = document.createElement('button');
+    kalenderTag.textContent = `Tag ${stopp.Tag}`;
+    kalenderTag.className = 'kalender-tag';
+    kalenderTag.onclick = () => zeigeOrt(index);
+    kalenderContainer.appendChild(kalenderTag);
+  });
+}
+
 window.onload = ladeDaten;
