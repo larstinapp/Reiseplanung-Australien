@@ -86,35 +86,48 @@ button:hover {
   background-color: #004d40;
 }
 
-/* Modal Styles */
+/* Modal-Styles */
 .modal {
   display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
   background-color: #fff;
+  margin: 15% auto;
   padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Kalender Styles */
+.kalender-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.kalender-tag {
+  background-color: #00796b;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.modal h3 {
-  margin-bottom: 10px;
-}
-
-.modal textarea {
-  width: 100%;
-  resize: vertical;
-}
-
-.modal button {
-  align-self: flex-end;
+.kalender-tag:hover {
+  background-color: #004d40;
 }
