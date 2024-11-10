@@ -1,33 +1,29 @@
-// Annahme: Daten sind bereits in der Variable `daten` enthalten, also entfällt der Ladeprozess
-// daten = JSON-Daten des Reiseplans (anstelle eines separaten JSON-Fetch-Vorgangs).
-// Wenn daten als externes JSON benötigt wird, aktivieren Sie ladeDaten().
-
 let aktuellerIndex = 0;
 let karte;
 let markerLayer;
 let aktuellerMarker;
 
 function initialisiereKarte() {
-  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Zentriert auf Australien
+  karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Australien zentrieren
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
   }).addTo(karte);
 
-  // Marker-Layer für die Karte
+  // Layer für Marker hinzufügen
   markerLayer = L.layerGroup().addTo(karte);
   zeichneRoute();
 }
 
 function zeichneRoute() {
   const routenPunkte = daten.map(stopp => [stopp.Breitengrad, stopp.Längengrad]);
-  L.polyline(routenPunkte, { color: 'blue', weight: 4, opacity: 0.6 }).addTo(karte);
+  L.polyline(routenPunkte, { color: '#00796b', weight: 4, opacity: 0.7 }).addTo(karte);
 }
 
 function zeigeOrt(index) {
   const ortDaten = daten[index];
   
   document.getElementById('ort').textContent = ortDaten.Ort;
-  document.getElementById('tag').textContent = `Tag ${ortDaten.Tag}`;
+  document.getElementById('tag').textContent = ortDaten.Tag;
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
   document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
@@ -37,7 +33,7 @@ function zeigeOrt(index) {
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  // Aktuellen Marker setzen
+  // Marker für aktuellen Stopp setzen
   if (aktuellerMarker) {
     markerLayer.removeLayer(aktuellerMarker);
   }
