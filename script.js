@@ -49,7 +49,7 @@ function zeigeOrt(index) {
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
 
-  // Marker für aktuellen Stopp setzen
+  // Aktuellen Marker setzen
   if (aktuellerMarker) {
     markerLayer.removeLayer(aktuellerMarker);
   }
