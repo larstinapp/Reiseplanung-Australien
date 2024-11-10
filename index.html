@@ -20,9 +20,12 @@
         <p><strong>Datum:</strong> <span id="datum"></span></p>
         <p><strong>Unterkunft:</strong> <span id="unterkunft"></span></p>
         <p><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
-        <label for="hinweise">Hinweise:</label>
-        <textarea id="hinweise" rows="3"></textarea>
-        <button onclick="speichereHinweise()">Speichern</button>
+        <div>
+          <p><strong>Hinweise:</strong> <span id="hinweiseText"></span></p>
+          <textarea id="hinweise" rows="3" style="display:none;"></textarea>
+          <button onclick="bearbeitenHinweise()" id="editButton">Bearbeiten</button>
+          <button onclick="speichereHinweise()" id="saveButton" style="display:none;">Speichern</button>
+        </div>
       </div>
       <div id="karte" class="map"></div>
       <div class="navigation">
