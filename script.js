@@ -46,9 +46,7 @@ function zeigeOrt(index) {
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
   document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
-
   document.getElementById('hinweiseText').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
-  document.getElementById('hinweise').value = ortDaten.Hinweise || '';
 
   const bildElement = document.getElementById('bild');
   bildElement.src = ortDaten.BildURL;
@@ -67,28 +65,23 @@ function zeigeOrt(index) {
 
 // Hinweise bearbeiten
 function bearbeitenHinweise() {
-  document.getElementById('hinweiseText').style.display = 'none';
-  document.getElementById('hinweise').style.display = 'block';
-  document.getElementById('editButton').style.display = 'none';
-  document.getElementById('saveButton').style.display = 'inline';
+  document.getElementById('hinweise').value = daten[aktuellerIndex].Hinweise || '';
+  document.getElementById('hinweiseModal').style.display = 'block';
 }
 
-// Hinweise speichern
 function speichereHinweise() {
   const hinweise = document.getElementById('hinweise').value;
   daten[aktuellerIndex].Hinweise = hinweise;
   localStorage.setItem('reiseplanDaten', JSON.stringify(daten));
 
   document.getElementById('hinweiseText').textContent = hinweise || 'Keine zusätzlichen Hinweise';
-  document.getElementById('hinweiseText').style.display = 'block';
-  document.getElementById('hinweise').style.display = 'none';
-  document.getElementById('editButton').style.display = 'inline';
-  document.getElementById('saveButton').style.display = 'none';
-
-  alert('Hinweise gespeichert!');
+  schliesseModal();
 }
 
-// Navigation
+function schliesseModal() {
+  document.getElementById('hinweiseModal').style.display = 'none';
+}
+
 function naechsterOrt() {
   if (aktuellerIndex < daten.length - 1) {
     aktuellerIndex++;
