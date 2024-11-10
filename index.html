@@ -22,15 +22,23 @@
         <p><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
         <div>
           <p><strong>Hinweise:</strong> <span id="hinweiseText"></span></p>
-          <textarea id="hinweise" rows="3" style="display:none;"></textarea>
           <button onclick="bearbeitenHinweise()" id="editButton">Bearbeiten</button>
-          <button onclick="speichereHinweise()" id="saveButton" style="display:none;">Speichern</button>
         </div>
       </div>
       <div id="karte" class="map"></div>
       <div class="navigation">
         <button onclick="vorherigerOrt()">← Zurück</button>
         <button onclick="naechsterOrt()">Weiter →</button>
+      </div>
+    </div>
+
+    <!-- Popup-Modal für Hinweise -->
+    <div id="hinweiseModal" class="modal">
+      <div class="modal-content">
+        <h3>Hinweise bearbeiten</h3>
+        <textarea id="hinweise" rows="3"></textarea>
+        <button onclick="speichereHinweise()">Speichern</button>
+        <button onclick="schliesseModal()">Abbrechen</button>
       </div>
     </div>
   </main>
