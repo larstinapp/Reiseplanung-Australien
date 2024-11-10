@@ -1,3 +1,18 @@
+const daten = [
+    {
+      "Tag": 1,
+      "Datum": "2024-11-12",
+      "Ort": "Melbourne - St. Kilda",
+      "Unterkunft": "The Kinson",
+      "Sehenswürdigkeiten": "St. Kilda Beach, Luna Park",
+      "Hinweise": null,
+      "BildURL": "https://www.cruiseandtravel.co.uk/wp-content/uploads/2024/06/iStock-876026224.jpg",
+      "Breitengrad": -37.8676,
+      "Längengrad": 144.9803
+    },
+    // ... Weitere Reiseziele
+];
+
 let aktuellerIndex = 0;
 let karte;
 let markerLayer;
