@@ -1,22 +1,23 @@
-const daten = [
-    {
-      "Tag": 1,
-      "Datum": "2024-11-12",
-      "Ort": "Melbourne - St. Kilda",
-      "Unterkunft": "The Kinson",
-      "Sehenswürdigkeiten": "St. Kilda Beach, Luna Park",
-      "Hinweise": null,
-      "BildURL": "https://www.cruiseandtravel.co.uk/wp-content/uploads/2024/06/iStock-876026224.jpg",
-      "Breitengrad": -37.8676,
-      "Längengrad": 144.9803
-    },
-    // ... Weitere Reiseziele
-];
-
+let daten = [];
 let aktuellerIndex = 0;
 let karte;
 let markerLayer;
 let aktuellerMarker;
+
+async function ladeDaten() {
+  try {
+    const antwort = await fetch('australien_reiseplan.json');
+    daten = await antwort.json();
+    if (daten && daten.length > 0) {
+      initialisiereKarte();
+      zeigeOrt(aktuellerIndex);
+    } else {
+      console.error('Die JSON-Datei enthält keine Daten.');
+    }
+  } catch (error) {
+    console.error('Fehler beim Laden der Daten:', error);
+  }
+}
 
 function initialisiereKarte() {
   karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Australien zentrieren
@@ -64,6 +65,9 @@ function naechsterOrt() {
   if (aktuellerIndex < daten.length - 1) {
     aktuellerIndex++;
     zeigeOrt(aktuellerIndex);
+  } else {
+    aktuellerIndex = 0; // Zurück zum ersten Ort
+    zeigeOrt(aktuellerIndex);
   }
 }
 
@@ -71,11 +75,11 @@ function vorherigerOrt() {
   if (aktuellerIndex > 0) {
     aktuellerIndex--;
     zeigeOrt(aktuellerIndex);
+  } else {
+    aktuellerIndex = daten.length - 1; // Zum letzten Ort gehen
+    zeigeOrt(aktuellerIndex);
   }
 }
 
 // Karte und erste Anzeige initialisieren
-window.onload = function() {
-  initialisiereKarte();
-  zeigeOrt(aktuellerIndex);
-};
+window.onload = ladeDaten;
