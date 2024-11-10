@@ -18,7 +18,9 @@
         <h2 id="ort" class="location-name"></h2>
         <p><strong>Tag:</strong> <span id="tag"></span></p>
         <p><strong>Datum:</strong> <span id="datum"></span></p>
-        <p><strong>Unterkunft:</strong> <span id="unterkunft"></span> <a id="unterkunftLink" href="" target="_blank" style="color: blue; text-decoration: underline; display:none;">Link zur Unterkunft</a></p>
+        <p><strong>Unterkunft:</strong> <span id="unterkunft"></span>
+          <a href="" target="_blank" id="unterkunftLink">(Link zur Unterkunft)</a>
+        </p>
         <p><strong>Sehenswürdigkeiten:</strong> <span id="sehenswuerdigkeiten"></span></p>
         <div>
           <p><strong>Hinweise:</strong> <span id="hinweiseText"></span></p>
@@ -30,6 +32,11 @@
         <button onclick="vorherigerOrt()">← Zurück</button>
         <button onclick="naechsterOrt()">Weiter →</button>
       </div>
+    </div>
+
+    <!-- Kalender-Container -->
+    <div id="kalender" class="kalender-container">
+      <h3>Kalender - Springe zu einem Tag</h3>
     </div>
 
     <!-- Popup-Modal für Hinweise -->
