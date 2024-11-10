@@ -121,13 +121,16 @@ button:hover {
 .kalender-tag {
   background-color: #00796b;
   color: white;
-  padding: 5px 10px;
-  margin: 5px;
   border: none;
   border-radius: 5px;
+  padding: 8px 12px;
+  margin: 5px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 .kalender-tag:hover {
-  background-color: #004d40;
+  background-color: #005c4f;
 }
+
