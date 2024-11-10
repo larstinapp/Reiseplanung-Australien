@@ -52,6 +52,15 @@ function zeigeOrt(index) {
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
   document.getElementById('hinweiseText').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
 
+  // Link zur Unterkunft anzeigen oder ausblenden
+  const unterkunftLink = document.getElementById('unterkunftLink');
+  if (ortDaten.URL) {
+    unterkunftLink.href = ortDaten.URL;
+    unterkunftLink.style.display = 'inline';
+  } else {
+    unterkunftLink.style.display = 'none';
+  }
+
   const bildElement = document.getElementById('bild');
   bildElement.src = ortDaten.BildURL;
   bildElement.alt = `Bild von ${ortDaten.Ort}`;
