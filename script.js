@@ -4,6 +4,7 @@ let karte;
 let markerLayer;
 let aktuellerMarker;
 
+// Daten laden und anzeigen
 async function ladeDaten() {
   try {
     const antwort = await fetch('australien_reiseplan.json');
@@ -19,6 +20,7 @@ async function ladeDaten() {
   }
 }
 
+// Karte initialisieren und Route zeichnen
 function initialisiereKarte() {
   karte = L.map('karte').setView([-25.2744, 133.7751], 5); // Australien zentrieren
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,6 +37,7 @@ function zeichneRoute() {
   L.polyline(routenPunkte, { color: '#00796b', weight: 4, opacity: 0.7 }).addTo(karte);
 }
 
+// Aktuellen Ort anzeigen
 function zeigeOrt(index) {
   const ortDaten = daten[index];
   
@@ -61,6 +64,7 @@ function zeigeOrt(index) {
   karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
 }
 
+// Navigation
 function naechsterOrt() {
   if (aktuellerIndex < daten.length - 1) {
     aktuellerIndex++;
