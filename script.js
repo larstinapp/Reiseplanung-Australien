@@ -4,13 +4,9 @@ let karte;
 let markerLayer;
 let aktuellerMarker;
 
-// Funktion zum Laden der Daten
 async function ladeDaten() {
   try {
     const antwort = await fetch('australien_reiseplan.json');
-    if (!antwort.ok) {
-      throw new Error(`HTTP-Fehler! Status: ${antwort.status}`);
-    }
     daten = await antwort.json();
     const gespeicherteDaten = JSON.parse(localStorage.getItem('reiseplanDaten'));
     if (gespeicherteDaten && gespeicherteDaten.length === daten.length) {
@@ -88,6 +84,7 @@ function speichereHinweise() {
   const hinweise = document.getElementById('hinweise').value;
   daten[aktuellerIndex].Hinweise = hinweise;
   localStorage.setItem('reiseplanDaten', JSON.stringify(daten));
+
   document.getElementById('hinweiseText').textContent = hinweise || 'Keine zusätzlichen Hinweise';
   schliesseModal();
 }
@@ -101,19 +98,21 @@ function schliesseModal() {
 function naechsterOrt() {
   if (aktuellerIndex < daten.length - 1) {
     aktuellerIndex++;
+    zeigeOrt(aktuellerIndex);
   } else {
     aktuellerIndex = 0;
+    zeigeOrt(aktuellerIndex);
   }
-  zeigeOrt(aktuellerIndex);
 }
 
 function vorherigerOrt() {
   if (aktuellerIndex > 0) {
     aktuellerIndex--;
+    zeigeOrt(aktuellerIndex);
   } else {
     aktuellerIndex = daten.length - 1;
+    zeigeOrt(aktuellerIndex);
   }
-  zeigeOrt(aktuellerIndex);
 }
 
 // Initialisierung
