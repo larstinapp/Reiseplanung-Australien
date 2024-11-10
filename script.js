@@ -9,6 +9,11 @@ async function ladeDaten() {
   try {
     const antwort = await fetch('australien_reiseplan.json');
     daten = await antwort.json();
+    // Prüfen auf Local Storage-Daten
+    const gespeicherteDaten = JSON.parse(localStorage.getItem('reiseplanDaten'));
+    if (gespeicherteDaten && gespeicherteDaten.length === daten.length) {
+      daten = gespeicherteDaten; // Verwende gespeicherte Daten
+    }
     if (daten && daten.length > 0) {
       initialisiereKarte();
       zeigeOrt(aktuellerIndex);
@@ -46,7 +51,7 @@ function zeigeOrt(index) {
   document.getElementById('datum').textContent = new Date(ortDaten.Datum).toLocaleDateString('de-DE');
   document.getElementById('unterkunft').textContent = ortDaten.Unterkunft;
   document.getElementById('sehenswuerdigkeiten').textContent = ortDaten.Sehenswürdigkeiten;
-  document.getElementById('hinweise').textContent = ortDaten.Hinweise || 'Keine zusätzlichen Hinweise';
+  document.getElementById('hinweise').value = ortDaten.Hinweise || '';
 
   const bildElement = document.getElementById('bild');
   bildElement.src = ortDaten.BildURL;
@@ -62,6 +67,14 @@ function zeigeOrt(index) {
     .openPopup();
 
   karte.setView([ortDaten.Breitengrad, ortDaten.Längengrad], 10);
+}
+
+// Hinweise speichern
+function speichereHinweise() {
+  const hinweise = document.getElementById('hinweise').value;
+  daten[aktuellerIndex].Hinweise = hinweise;
+  localStorage.setItem('reiseplanDaten', JSON.stringify(daten)); // Daten in Local Storage speichern
+  alert('Hinweise gespeichert!');
 }
 
 // Navigation
